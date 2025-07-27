@@ -17,6 +17,10 @@ const orderSchema = new mongoose.Schema({
             ref: "Product",
             required: true,
         },
+        name: {
+            type: String,
+            required: true,
+        },
         quantityRequired: {
             type: Number,
             required: true,
@@ -39,11 +43,6 @@ const orderSchema = new mongoose.Schema({
         type: String,
         enum: ["cash", "online"],
         default: "cash",
-    },
-    paymentStatus: {
-        type: String,
-        enum: ["pending", "paid", "failed"],
-        default: "pending",
     },
     vendorRating: [{
         type: Number,

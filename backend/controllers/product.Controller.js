@@ -199,5 +199,33 @@ const getProducts = async (req, res) => {
   }
 };
 
+const getAllProductsForVendor = async (req, res) => {
+  try {
+    const { category } = req.query;
 
-export { createProductRequest, updateProduct, deleteProduct, getProducts };
+    let filter = {};
+
+    const userRole = req.user?.role;
+
+    if(userRole !== "vendor") {
+      throw new ApiError(401, "Unauthorized");
+    }
+    if (category) {
+      filter.category = category;
+    }
+
+    const products = await Product.find(filter);
+
+    res.status(200).json(
+      new ApiResponse(200, products, "Vendor product list fetched successfully")
+    );
+  } catch (error) {
+    console.error("Error fetching products for vendor:", error);
+    const status = error.statusCode || 500;
+    res.status(status).json(
+      new ApiError(status, error.message || "Server error")
+    );
+  }
+};
+
+export { createProductRequest, updateProduct, deleteProduct, getProducts, getAllProductsForVendor };

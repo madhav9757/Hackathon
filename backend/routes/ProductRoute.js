@@ -6,6 +6,7 @@ import {
   updateProduct,
   deleteProduct,
   getProducts,
+  getAllProductsForVendor,
 } from "../controllers/product.Controller.js";
 import { upload } from "../middleware/uploadMiddleware.js";
 
@@ -29,6 +30,10 @@ router.route("/update-product").patch(
 );
 
 router.route("/delete-product").delete(protect, asyncHandler(deleteProduct));
+
+router
+  .route("/get-all-products")
+  .get(protect, asyncHandler(getAllProductsForVendor));
 
 router.route("/get-products").get(protect, asyncHandler(getProducts));
 export default router;

@@ -7,6 +7,7 @@ import authRoutes from './routes/authRoutes.js';
 import cookieParser from 'cookie-parser';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import ProductRouter from './routes/ProductRoute.js';
+import OrderRouter from './routes/order.routes.js';
 
 // ✅ Load env variables
 dotenv.config();
@@ -34,6 +35,7 @@ app.get('/', (req, res) => {
 // ✅ Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/products', ProductRouter);
+app.use('/api/orders', OrderRouter);
 
 // ✅ Error handlers
 app.use(notFound);
