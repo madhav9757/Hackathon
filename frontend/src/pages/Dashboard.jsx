@@ -11,16 +11,15 @@ import {
 } from "react-icons/fa";
 
 const Dashboard = () => {
-  const { user } = useAuth(); // contains { name, role, address, ... }
+  const { user } = useAuth();
 
-  // Define dashboard actions for each role
   const roleActions = {
     customer: [
       {
         title: "My Orders",
         icon: <FaClipboardList size={24} />,
         bg: "bg-blue-100",
-        path: "/orders",
+        path: "/my-orders", // for customers
       },
       {
         title: "Notifications",
@@ -37,16 +36,16 @@ const Dashboard = () => {
     ],
     supplier: [
       {
-        title: "Manage Products",
-        icon: <FaBoxOpen size={24} />,
+        title: "Manage Orders",
+        icon: <FaClipboardList size={24} />,
         bg: "bg-green-100",
-        path: "/manage-products",
+        path: "/orders", // supplier view (OrderPage)
       },
       {
-        title: "View Orders",
-        icon: <FaClipboardList size={24} />,
+        title: "Manage Products",
+        icon: <FaBoxOpen size={24} />,
         bg: "bg-blue-100",
-        path: "/orders",
+        path: "/manage-products",
       },
       {
         title: "Analytics",
@@ -57,16 +56,16 @@ const Dashboard = () => {
     ],
     vendor: [
       {
-        title: "Vendor Panel",
+        title: "My Orders",
         icon: <FaStore size={24} />,
         bg: "bg-pink-100",
-        path: "/vendor/panel",
+        path: "my-orders", // vendor view (MyOrders)
       },
       {
-        title: "Manage Users",
+        title: "Browse Products",
         icon: <FaUsers size={24} />,
         bg: "bg-teal-100",
-        path: "/vendor/users",
+        path: "/products",
       },
       {
         title: "Reports",
@@ -77,7 +76,6 @@ const Dashboard = () => {
     ],
   };
 
-  // Fallback if role doesn't match
   const actions = roleActions[user.role?.toLowerCase()] || [];
 
   return (
@@ -86,17 +84,12 @@ const Dashboard = () => {
         <h1 className="text-4xl font-bold text-gray-800 mb-2">
           {user.role} Dashboard
         </h1>
-        <p className="text-gray-600 text-lg">
-          Welcome back, {user.name} 👋
-        </p>
+        <p className="text-gray-600 text-lg">Welcome back, {user.name} 👋</p>
         {user.address && (
-          <p className="text-gray-500 text-sm mt-1">
-            Address: {user.address}
-          </p>
+          <p className="text-gray-500 text-sm mt-1">Address: {user.address}</p>
         )}
       </div>
 
-      {/* Actions Grid */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {actions.map((item, idx) => (
           <div
@@ -107,16 +100,13 @@ const Dashboard = () => {
             <div className="flex items-center gap-4">
               <div className="text-gray-800">{item.icon}</div>
               <div>
-                <h2 className="text-lg font-semibold text-gray-700">
-                  {item.title}
-                </h2>
+                <h2 className="text-lg font-semibold text-gray-700">{item.title}</h2>
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Quick Tips Section */}
       <div className="mt-10">
         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Quick Tips</h2>
         <ul className="list-disc list-inside text-gray-600 space-y-1">
