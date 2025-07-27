@@ -7,6 +7,8 @@ import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import Profile from "./pages/Profile";
 import PageNotFound from "./pages/PageNotFound";
+import CreateProduct from "./pages/CreateProduct";
+import ManageProducts from "./pages/supplier/ManageProducts";
 
 export default function AppRouter() {
   return (
@@ -21,14 +23,16 @@ export default function AppRouter() {
         <Route path="/admin" element={<AdminDashboard />} />
       </Route>
 
-      <Route element={<ProtectedRoute allowedRoles={["supplier", "customer", "vendor", "admin"]} />}>
+      {/* Shared Protected Routes */}
+      <Route element={<ProtectedRoute allowedRoles={["admin", "supplier", "vendor", "customer"]} />}>
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profile" element={<Profile />} />
       </Route>
 
-      <Route
-        element={<ProtectedRoute allowedRoles={["admin", "supplier", "customer", "vendor"]} />}
-      >
-        <Route path="/profile" element={<Profile />} />
+      {/* Protected Routes for Supplier Only */}
+      <Route element={<ProtectedRoute allowedRoles={["supplier"]} />}>
+        <Route path="/create-product" element={<CreateProduct />} />
+        <Route path="/manage-products" element={<ManageProducts />} /> {/* ✅ Added */}
       </Route>
 
       {/* Fallback */}

@@ -11,9 +11,35 @@ const Home = () => {
   return (
     <div className="p-8 text-center">
       <h1 className="text-3xl font-bold mb-4">Welcome to Our App 🚀</h1>
+
       {user ? (
         <>
-          <p className="mb-4 text-lg">Hello, <strong>{user.name}</strong>! 👋</p>
+          <p className="mb-4 text-lg">
+            Hello, <strong>{user.name}</strong>! 👋
+          </p>
+
+          {user.role === "seller" && (
+            <div className="mb-6">
+              <p className="text-green-700 font-semibold mb-2">
+                Seller Dashboard 📦
+              </p>
+              <div className="space-x-4">
+                <Link
+                  to="/create-product"
+                  className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+                >
+                  Create Product
+                </Link>
+                <Link
+                  to="/my-products"
+                  className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
+                >
+                  View My Products
+                </Link>
+              </div>
+            </div>
+          )}
+
           <Link
             to="/profile"
             className="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700"

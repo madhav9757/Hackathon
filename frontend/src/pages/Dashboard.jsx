@@ -40,19 +40,19 @@ const Dashboard = () => {
         title: "Manage Products",
         icon: <FaBoxOpen size={24} />,
         bg: "bg-green-100",
-        path: "/supplier/products",
+        path: "/manage-products",
       },
       {
         title: "View Orders",
         icon: <FaClipboardList size={24} />,
         bg: "bg-blue-100",
-        path: "/supplier/orders",
+        path: "/orders",
       },
       {
         title: "Analytics",
         icon: <FaChartBar size={24} />,
         bg: "bg-indigo-100",
-        path: "/supplier/analytics",
+        path: "/analytics",
       },
     ],
     vendor: [
