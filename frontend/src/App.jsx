@@ -1,9 +1,15 @@
-import React from "react"
-function App() {
+import React from "react";
+import { AuthProvider } from "./context/AuthContext";
+import AppRouter from "./router";
+import Navbar from "./components/Navbar";
 
-  return(
-    <div className='w-screen h-screen bg-black flex justify-center items-center text-white font-bold'>hackathon</div>
-  )
-}
+const App = () => {
+  return (
+    <AuthProvider>
+      <Navbar />
+      <AppRouter />
+    </AuthProvider>
+  );
+};
 
-export default App
+export default App;
