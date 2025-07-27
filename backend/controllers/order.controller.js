@@ -148,11 +148,11 @@ const getOrderDetails = async (req, res) => {
       .select("-vendorRating")
       .populate({
         path: "vendorId",
-        select: "name email phoneNumber",
+        select: "name email phoneNumber address",
       })
       .populate({
         path: "supplierId",
-        select: "name email phoneNumber",
+        select: "name email phoneNumber address",
       })
       .populate({
         path: "items.productId",
