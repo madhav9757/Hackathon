@@ -21,22 +21,10 @@ export default function AppRouter() {
         <Route path="/admin" element={<AdminDashboard />} />
       </Route>
 
-      {/* Protected Routes for Supplier */}
-      <Route element={<ProtectedRoute allowedRoles={["supplier"]} />}>
+      <Route element={<ProtectedRoute allowedRoles={["supplier", "customer", "vendor", "admin"]} />}>
         <Route path="/dashboard" element={<Dashboard />} />
       </Route>
 
-      {/* Protected Routes for Customer */}
-      <Route element={<ProtectedRoute allowedRoles={["customer"]} />}>
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Route>
-
-      {/* Protected Routes for Vendor */}
-      <Route element={<ProtectedRoute allowedRoles={["vendor"]} />}>
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Route>
-
-      {/* Common Protected Route for All Roles */}
       <Route
         element={<ProtectedRoute allowedRoles={["admin", "supplier", "customer", "vendor"]} />}
       >

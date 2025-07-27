@@ -1,49 +1,45 @@
 // src/pages/Home.jsx
-import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { motion } from "framer-motion";
 
 const Home = () => {
-  const { user } = useAuth();
-  const navigate = useNavigate();
+  const { user, loading } = useAuth();
 
-  useEffect(() => {
-    if (user) {
-      navigate("/dashboard"); // or "/profile"
-    }
-  }, [user, navigate]);
+  if (loading) return <div className="text-center mt-10">Loading...</div>;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-white px-4">
-      <motion.div
-        className="bg-white rounded-xl shadow-xl p-10 max-w-md w-full text-center"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        <h1 className="text-4xl font-extrabold text-blue-600 mb-3">
-          Welcome to Our App 🚀
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Get started by logging in or creating a new account.
-        </p>
-
-        <div className="flex justify-center gap-4">
+    <div className="p-8 text-center">
+      <h1 className="text-3xl font-bold mb-4">Welcome to Our App 🚀</h1>
+      {user ? (
+        <>
+          <p className="mb-4 text-lg">Hello, <strong>{user.name}</strong>! 👋</p>
           <Link
-            to="/login"
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-2 rounded-full shadow transition duration-300"
+            to="/profile"
+            className="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700"
           >
-            Login
+            Go to Dashboard
           </Link>
-          <Link
-            to="/register"
-            className="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-2 rounded-full shadow transition duration-300"
-          >
-            Register
-          </Link>
-        </div>
-      </motion.div>
+        </>
+      ) : (
+        <>
+          <p className="mb-6">Please login or register to continue.</p>
+          <div className="space-x-4">
+            <Link
+              to="/login"
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            >
+              Login
+            </Link>
+            <Link
+              to="/register"
+              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            >
+              Register
+            </Link>
+          </div>
+        </>
+      )}
     </div>
   );
 };

@@ -13,22 +13,25 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await login(form);
+      await login(form); // assume login() sets localStorage and context
+
       const user = JSON.parse(localStorage.getItem("user"));
 
-      if (user.role === "admin") {
-        navigate("/admin");
-      } else if (
-        user.role === "supplier" ||
-        user.role === "customer" ||
-        user.role === "vendor"
-      ) {
-        navigate("/dashboard");
-      } else {
-        navigate("/dashboard");
+      // Role-based redirects
+      switch (user.role) {
+        case "admin":
+          navigate("/admin");
+          break;
+        case "supplier":
+        case "customer":
+        case "vendor":
+          navigate("/dashboard");
+          break;
+        default:
+          navigate("/dashboard");
       }
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Login failed");
     }
   };
 

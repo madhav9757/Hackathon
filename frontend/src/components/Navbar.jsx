@@ -21,18 +21,6 @@ const Navbar = () => {
 
   const isActive = (path) => location.pathname === path;
 
-  const roleDashboard = () => {
-    switch (user?.role) {
-      case "admin":
-        return "/admin-dashboard";
-      case "vendor":
-        return "/vendor-dashboard";
-      case "delivery":
-        return "/delivery-dashboard";
-      default:
-        return "/dashboard";
-    }
-  };
 
   return (
     <nav className="bg-gray-950 text-white shadow-md sticky top-0 z-50">
@@ -53,9 +41,9 @@ const Navbar = () => {
           {!loading && user && (
             <>
               <Link
-                to={roleDashboard()}
+                to={user?.role === "admin" ? "/admin-dashboard" : "/dashboard"}
                 className={`hover:text-blue-400 transition ${
-                  isActive(roleDashboard()) ? "text-blue-400 underline" : ""
+                  isActive(user?.role === "admin" ? "/admin-dashboard" : "/dashboard") ? "text-blue-400 underline" : ""
                 }`}
               >
                 Dashboard

@@ -1,68 +1,128 @@
 import React from "react";
 import { useAuth } from "../context/AuthContext";
-import { FaClipboardList, FaUsers, FaBell, FaChartBar } from "react-icons/fa";
+import {
+  FaClipboardList,
+  FaUsers,
+  FaBell,
+  FaChartBar,
+  FaBoxOpen,
+  FaStore,
+  FaUserTie,
+} from "react-icons/fa";
 
 const Dashboard = () => {
-  const { user } = useAuth();
+  const { user } = useAuth(); // contains { name, role, address, ... }
 
-  const actions = [
-    {
-      title: "View Orders",
-      icon: <FaClipboardList size={24} />,
-      bg: "bg-blue-100",
-      path: "/orders",
-    },
-    {
-      title: "Manage Users",
-      icon: <FaUsers size={24} />,
-      bg: "bg-green-100",
-      path: "/users",
-    },
-    {
-      title: "Notifications",
-      icon: <FaBell size={24} />,
-      bg: "bg-yellow-100",
-      path: "/notifications",
-    },
-    {
-      title: "Analytics",
-      icon: <FaChartBar size={24} />,
-      bg: "bg-purple-100",
-      path: "/analytics",
-    },
-  ];
+  // Define dashboard actions for each role
+  const roleActions = {
+    customer: [
+      {
+        title: "My Orders",
+        icon: <FaClipboardList size={24} />,
+        bg: "bg-blue-100",
+        path: "/orders",
+      },
+      {
+        title: "Notifications",
+        icon: <FaBell size={24} />,
+        bg: "bg-yellow-100",
+        path: "/notifications",
+      },
+      {
+        title: "Browse Products",
+        icon: <FaBoxOpen size={24} />,
+        bg: "bg-purple-100",
+        path: "/products",
+      },
+    ],
+    supplier: [
+      {
+        title: "Manage Products",
+        icon: <FaBoxOpen size={24} />,
+        bg: "bg-green-100",
+        path: "/supplier/products",
+      },
+      {
+        title: "View Orders",
+        icon: <FaClipboardList size={24} />,
+        bg: "bg-blue-100",
+        path: "/supplier/orders",
+      },
+      {
+        title: "Analytics",
+        icon: <FaChartBar size={24} />,
+        bg: "bg-indigo-100",
+        path: "/supplier/analytics",
+      },
+    ],
+    vendor: [
+      {
+        title: "Vendor Panel",
+        icon: <FaStore size={24} />,
+        bg: "bg-pink-100",
+        path: "/vendor/panel",
+      },
+      {
+        title: "Manage Users",
+        icon: <FaUsers size={24} />,
+        bg: "bg-teal-100",
+        path: "/vendor/users",
+      },
+      {
+        title: "Reports",
+        icon: <FaChartBar size={24} />,
+        bg: "bg-orange-100",
+        path: "/vendor/reports",
+      },
+    ],
+  };
+
+  // Fallback if role doesn't match
+  const actions = roleActions[user.role?.toLowerCase()] || [];
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gray-800 mb-2">Dashboard</h1>
-        <p className="text-gray-600 text-lg">Welcome back, {user.name} 👋</p>
+        <h1 className="text-4xl font-bold text-gray-800 mb-2">
+          {user.role} Dashboard
+        </h1>
+        <p className="text-gray-600 text-lg">
+          Welcome back, {user.name} 👋
+        </p>
+        {user.address && (
+          <p className="text-gray-500 text-sm mt-1">
+            Address: {user.address}
+          </p>
+        )}
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {/* Actions Grid */}
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {actions.map((item, idx) => (
           <div
             key={idx}
             className={`rounded-xl p-6 cursor-pointer shadow-md hover:shadow-lg transition ${item.bg}`}
-            onClick={() => window.location.href = item.path}
+            onClick={() => (window.location.href = item.path)}
           >
             <div className="flex items-center gap-4">
               <div className="text-gray-800">{item.icon}</div>
               <div>
-                <h2 className="text-lg font-semibold text-gray-700">{item.title}</h2>
+                <h2 className="text-lg font-semibold text-gray-700">
+                  {item.title}
+                </h2>
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Optional: Add recent activity, graphs, or role-specific tips below */}
+      {/* Quick Tips Section */}
       <div className="mt-10">
         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Quick Tips</h2>
         <ul className="list-disc list-inside text-gray-600 space-y-1">
-          <li>Use the navigation above to manage your responsibilities.</li>
+          <li>Use the dashboard to manage your daily operations.</li>
           <li>Check your notifications regularly.</li>
-          <li>Visit the Analytics tab to monitor performance.</li>
+          <li>Role-specific tools are available above.</li>
         </ul>
       </div>
     </div>
