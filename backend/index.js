@@ -25,8 +25,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // CORS (for Tailwind frontend like Vite or React)
+const allowedOrigins = ["https://hackathon-one-fawn.vercel.app"];
+
 app.use(cors({
-  origin: [process.env.FRONTEND_URL],
+  origin: allowedOrigins,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
