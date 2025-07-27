@@ -26,7 +26,7 @@ app.use(cookieParser());
 
 // CORS (for Tailwind frontend like Vite or React)
 app.use(cors({
-  origin: 'http://localhost:5173', // change to your frontend domain in production
+  origin: process.env.FRONTEND_URL, // change to your frontend domain in production
   credentials: true,
 }));
 
